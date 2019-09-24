@@ -10,6 +10,7 @@ import Card from 'react-bootstrap/Card';
 
 const SideMenuLinkStyle = styled.div`
     background: inherit;
+    cursor: pointer;
 
     .sidemenu-icon {
         margin: 0 15px 0 5px;
@@ -32,13 +33,18 @@ const SideMenuLinkStyle = styled.div`
     .header-active {
         color: red;
     }
+
+    .link-pointer {
+        float: right;
+    }
 `;
                         
 class SideMenuLink extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isActive: Link.findPathInLinks(props.location.pathname, props.data.subMenu)
+            isActive: Link.findPathInLinks(props.location.pathname, props.data.subMenu),
+            open: false
         }
     }
 
@@ -51,15 +57,24 @@ class SideMenuLink extends Component {
     }
 
     render() {
+        const icon = this.state.open ? 'arrow-down' : 'arrow-right';
+
         return  <SideMenuLinkStyle>
                     <Card style={{backgroundColor : "inherit", border: "0"}}>
                         <Accordion.Toggle 
+                            onClick={() => this.setState({ open: !this.state.open })}
                             className={this.state.isActive ? "header-active" : ""}
                             as={Card.Header} 
                             eventKey={this.props.eventKey}>
-                                <FontAwesomeIcon className="sidemenu-icon" icon={this.props.data.icon}/>{this.props.data.name}
+                                <FontAwesomeIcon className="sidemenu-icon" icon={this.props.data.icon}/>
+                                {this.props.data.name}
+                                <div className="link-pointer">
+                                    <FontAwesomeIcon className="sidemenu-icon" icon={icon}/>
+                                    
+                                </div>
+                                
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={this.props.eventKey}>
+                        <Accordion.Collapse in={this.state.open} eventKey={this.props.eventKey}>
                             <Card.Body className="d-flex align-items-start flex-column pt-1">
                                 {this.props.data.subMenu.map((link, index)=>{
                                     return <NavLink 
