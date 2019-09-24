@@ -7,10 +7,6 @@ import Routes from "./components/router/Routes"
 import AdminSideMenu from "./components/layout/admin/AdminSideMenu";
 import AdminNavbar from "./components/layout/admin/AdminNavbar";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
 class App extends Component {
     /**
      * Fix for some browsers which don't support history
@@ -67,7 +63,7 @@ class App extends Component {
                     <div className="flex-grow-1" style={{'overflowY':'scroll', "height": "100vh"}} sm={8}>
                         <AdminNavbar></AdminNavbar>
                         {this.renderMainContent()}
-                        {a.map((t)=>{return <p>{t}</p>})}
+                        {a.map((t, index)=>{return <p key={index}>{t}</p>})}
                     </div>
                 </div>
     }

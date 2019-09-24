@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link as RouterLink} from 'react-router-dom';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+
+import HeaderLink from "./HeaderLink";
 import Link from '../../js/helperClasses/Link';
 import { LINKS } from '../../js/Enums';
 
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 class Header extends Component {
     logoLink = new Link("React-Bootstrap", "home");
 
@@ -18,12 +20,12 @@ class Header extends Component {
             LINKS.DIVIDER,
             LINKS.SEPERATED_LINK
         ])
-    ]
+    ];
 
     rightHalfLinks = [
         LINKS.CONTACT_US,
         LINKS.ABOUT_US
-    ]
+    ];
 
     render() {
         return  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -31,13 +33,13 @@ class Header extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        {this.leftHalfLinks.map((link)=>{
-                            return link.render();
+                        {this.leftHalfLinks.map((link, index)=>{
+                            return <HeaderLink key={index} data={link} index={index}></HeaderLink>;
                         })}
                     </Nav>
                     <Nav>
-                        {this.rightHalfLinks.map((link)=>{
-                            return link.render();
+                        {this.rightHalfLinks.map((link, index)=>{
+                            return <HeaderLink key={index} data={link} index={index}></HeaderLink>;
                         })}
                     </Nav>
                     </Navbar.Collapse>

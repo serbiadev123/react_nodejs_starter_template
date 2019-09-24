@@ -1,43 +1,23 @@
-import React from "react";
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link as RouterLink} from 'react-router-dom';
-
 // only 2 level drop down supported for now
 class Link {
     name = "";
+    icon = "";
     relativeUrl = "";
     absoluteUrl = "";
     subMenu = [];
 
-    constructor(name, relativeUrl, subMenu = []) {
+    constructor(name, relativeUrl, subMenu = [], icon = "") {
         this.name = name;
+        this.icon = icon;
         this.relativeUrl = relativeUrl;
         this.absoluteUrl = Link.buildAbsolutePath(relativeUrl);
         this.subMenu = subMenu;
     }
-
-    render() {
-        Link.key += 1;
-        
-        if (this.subMenu.length) {
-            return <NavDropdown key={Link.key} title={this.name} id="collasible-nav-dropdown">
-                {this.subMenu.map((link, index)=>{
-                    return link === Link.DIVIDER ?
-                        <NavDropdown.Divider key={index}/> :
-                        <NavDropdown.Item  as={RouterLink} key={index} to={link.relativeUrl}>{link.name}</NavDropdown.Item>
-                })}
-            </NavDropdown>
-        }
-        
-        return <Nav.Link as={RouterLink} key={Link.key} to={this.relativeUrl}>{this.name}</Nav.Link>;
-    }
 }
 
-Link.key = 0;
 Link.DIVIDER = "divider";
 Link.siteUrl = process.env.REACT_APP_SERVER_URL;
-Link.separator = '/';
+Link.SEPARATOR = '/';
 Link.buildAbsolutePath = function(relativePath) {
     let absolutePath;
 
@@ -50,11 +30,24 @@ Link.buildAbsolutePath = function(relativePath) {
     if (relativePath.startsWith('/') || relativePath.startsWith('\\')) {
         absolutePath += relativePath;
     } else {
-        absolutePath += Link.separator + relativePath;
+        absolutePath += Link.SEPARATOR + relativePath;
     }
 
     return absolutePath;
 }
 
+/**
+ * checks if some link exists in array of links.
+ * settings:
+ *  - exact: finds the exact link
+ */
+Link.findPathInLinks = function(path, links, settings = {}) {
+    let doesExist = links.some((link)=>{
+        let currentPath = link.relativeUrl;
+        let stringQueryStart = settings.exact ? -1 : currentPath.search(/[?]/g);
 
+        return currentPath.substring(0, stringQueryStart !== -1 ? stringQueryStart : currentPath.length) === path;        
+    });
+    return doesExist;
+}
 export default Link;
