@@ -8,8 +8,6 @@ import { Link as RouterLink} from 'react-router-dom';
 import { LINKS } from '../../js/Enums';
 
 const FooterStyle = styled.div`
-    background-color: #343a40;
-    color: white;
 `;
 
 const FooterElement = styled.div`
@@ -58,7 +56,7 @@ class Footer extends Component {
     ];
 
     render() {
-        return  <FooterStyle>
+        return  <FooterStyle className="main-footer">
                     <Container>
                         <Row>
                             <Col className="text-center">

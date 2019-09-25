@@ -1,4 +1,5 @@
 import './scss/custom.scss';
+import './scss/defaultVariables.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

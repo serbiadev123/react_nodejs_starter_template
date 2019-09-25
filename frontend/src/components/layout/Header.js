@@ -7,6 +7,7 @@ import { LINKS } from '../../js/Enums';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+
 class Header extends Component {
     logoLink = new Link("React-Bootstrap", "home");
 
@@ -28,16 +29,16 @@ class Header extends Component {
     ];
 
     render() {
-        return  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand as={RouterLink} to={this.logoLink.relativeUrl}>{this.logoLink.name}</Navbar.Brand>
+        return  <Navbar collapseOnSelect expand="lg" bg="custom" className="custom-brand">
+                    <Navbar.Brand className="custom-brand" as={RouterLink} to={this.logoLink.relativeUrl}>{this.logoLink.name}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Nav className="mr-auto custom-header-links">
                         {this.leftHalfLinks.map((link, index)=>{
                             return <HeaderLink key={index} data={link} index={index}></HeaderLink>;
                         })}
                     </Nav>
-                    <Nav>
+                    <Nav className="custom-header-links">
                         {this.rightHalfLinks.map((link, index)=>{
                             return <HeaderLink key={index} data={link} index={index}></HeaderLink>;
                         })}
