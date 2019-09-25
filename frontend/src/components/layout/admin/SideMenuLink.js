@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import {  NavLink } from 'react-router-dom'
 import Link from '../../../js/helperClasses/Link'
+import { ICONS } from '../../../js/Enums';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from 'react-bootstrap/Accordion';
@@ -57,7 +58,7 @@ class SideMenuLink extends Component {
     }
 
     render() {
-        const icon = this.state.open ? 'arrow-down' : 'arrow-right';
+        const icon = this.state.open ? ICONS.ARROW_DOWN : ICONS.ARROW_UP;
 
         return  <SideMenuLinkStyle>
                     <Card style={{backgroundColor : "inherit", border: "0"}}>

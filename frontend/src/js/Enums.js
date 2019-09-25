@@ -2,7 +2,9 @@ import Link from './helperClasses/Link';
 
 export const ICONS = {
     HOME: "home",
-    COFFEE: "coffee"
+    COFFEE: "coffee",
+    ARROW_DOWN: "arrow-down",
+    ARROW_UP: "arrow-right"
     // @TODO: add more icons when needed, also incluse in the library in the app.js
 };
 
