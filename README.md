@@ -31,6 +31,8 @@ Files are organized in:
 
 - fontawsome.js - *used to import fontawsome icons to a library FE can use*
 
+- .env - should contain data which should not be public. And some global variables like the database name, server url, passwords.
+
 
 # Starting the application
   
