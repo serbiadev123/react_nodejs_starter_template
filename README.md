@@ -7,6 +7,9 @@ supported by a API server (**nodeJS**) backend -> **backend folder**.
 
 # Starting the application
 ## Front End
+
+Make sure you have node.js installed. Download from [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+
 Go to the frontend folder.
 
 - make sure you have an .env file with following variables:
