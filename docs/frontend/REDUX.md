@@ -39,7 +39,7 @@ export const testAdminAction = data => ({
 });
 ```
 ### Reducers
-Same as actions action types should be seperated in different files just as the actions are.
+Same as actions, reducers should be seperated in different files just as the actions are.
 Reducer is used to assign value defined in the **action type** to the state.
 Based on the action type it knows how to process the data, and which state value to change.
 Always make sure to intialize a value in the state, and don't forget to copy the existing values of the state `...state`
