@@ -19,6 +19,30 @@ body {
     .custom-header-links.navbar-nav a {
         color: $quinary-color;
     }
+
+    .custom-header-links.navbar-nav a:hover {
+        background-color: $primary-color;
+        color: $quinary-color;
+    }
+
+    .show.dropdown.nav-item {
+        .dropdown-toggle.nav-link {
+            background-color: $primary-color;
+            color: $quinary-color;
+        }
+    }
+
+    .dropdown-menu.show {
+        background-color: $quaternary-color;
+    }
+
+    .dropdown-menu.show a:hover {
+        background-color: $primary-color;
+    }
+
+    .active-header-link {
+        background-color: $primary-color;
+    }
 }
 
 .custom-header {

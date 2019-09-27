@@ -16,7 +16,12 @@ class HeaderLink extends Component {
                     </NavDropdown>
         }
 
-        return  <Nav.Link as={RouterLink} key={this.props.index} to={this.props.data.relativeUrl}>{this.props.data.name}</Nav.Link>
+        return  <Nav.Link   
+                    as={RouterLink} 
+                    key={this.props.index} 
+                    to={this.props.data.relativeUrl}>
+                    {this.props.data.name}
+                </Nav.Link>
     }
 }
 
