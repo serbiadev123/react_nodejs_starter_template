@@ -5,7 +5,7 @@ import * as apiService from "../../services/apiService";
 import { auth } from "../../services/authService";
 
 export const testAdmin = () => {
-    return apiService.get(`/todos/1`, auth(), testAdminAction);
+    return apiService.get(`/api/test`, auth(), testAdminAction);
 };
 
 

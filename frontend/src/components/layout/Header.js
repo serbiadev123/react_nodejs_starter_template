@@ -13,10 +13,12 @@ class Header extends Component {
 
     leftHalfLinks = [
         LINKS.FEATURES,
+        LINKS.FEATURES,
         LINKS.PRICING,
         new Link("Dropdown", "", [
             LINKS.ACTION,
             LINKS.ANOTHER_ACTION,
+            LINKS.DIVIDER,
             LINKS.SOMETHING,
             LINKS.DIVIDER,
             LINKS.SEPERATED_LINK

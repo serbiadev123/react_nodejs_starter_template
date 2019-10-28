@@ -1,0 +1,84 @@
+{
+  "name": "typescript-express-sequelize",
+  "version": "2.0.0",
+  "description": "Sample project with Express + Sequelize + Typescript",
+  "homepage": "https://github.com/maximegris/typescript-express-sequelize",
+  "author": {
+    "name": "Maxime GRIS",
+    "email": "maxime.gris@gmail.com"
+  },
+  "main": "build/src/server.js",
+  "keywords": [
+    "Node",
+    "Express",
+    "Typescript",
+    "Sequelize"
+  ],
+  "scripts": {
+    "build": "gulp build",
+    "doc": "gulp generate:doc",
+    "start": "cross-env NODE_ENV=test gulp watch",
+    "start:prod": "cross-env NODE_ENV=production gulp watch",
+    "run:test": "cross-env NODE_ENV=test gulp test",
+    "tslint": "gulp tslint",
+    "prettify": "./node_modules/.bin/tsfmt -r --baseDir ./src",
+    "sqlz:migrate": "./node_modules/.bin/sequelize db:migrate",
+    "sqlz:undo": "./node_modules/.bin/sequelize db:migrate:undo",
+    "sqlz:new": "./node_modules/.bin/sequelize migration:create"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "npm run prettify",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "cross-env": "6.0.0",
+    "express": "4.17.1",
+    "express-boom": "3.0.0",
+    "morgan": "1.9.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^2.0.0",
+    "pg": "7.12.1",
+    "pg-hstore": "2.3.3",
+    "sequelize": "5.19.1",
+    "sqlite": "^3.0.3",
+    "uuid": "3.3.3",
+    "winston": "3.2.1"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "extendify": "1.0.0",
+    "glob": "7.1.4",
+    "gulp": "4.0.2",
+    "gulp-istanbul": "1.1.3",
+    "gulp-json-refs": "0.1.1",
+    "gulp-mocha": "7.0.1",
+    "gulp-nodemon": "2.4.2",
+    "gulp-plumber": "1.2.1",
+    "gulp-sourcemaps": "2.6.5",
+    "gulp-tslint": "8.1.4",
+    "gulp-typedoc": "2.2.2",
+    "gulp-typescript": "5.0.1",
+    "husky": "3.0.7",
+    "lint-staged": "9.4.0",
+    "remap-istanbul": "0.13.0",
+    "rimraf": "3.0.0",
+    "sequelize-cli": "^5.5.1",
+    "tslint": "5.20.0",
+    "typedoc": "0.15.0",
+    "typescript": "3.6.3",
+    "typescript-formatter": "7.2.2"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

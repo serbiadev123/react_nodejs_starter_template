@@ -16,6 +16,7 @@ class Home extends Component {
         return (
             <div>
             <h2>Home</h2>
+            {this.props.testData.msg}
             <p>Action Response: {JSON.stringify(this.props.testData)}</p>
             </div>
         );
