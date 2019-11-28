@@ -4,14 +4,6 @@ import { withRouter } from "react-router-dom";
 import { testAdmin } from "../../js/store/actions/AdminActions";
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-        setTimeout(function(){
-            props.testAction();
-        }, 2000);
-        
-    }
-
     render() {
         return (
             <div>

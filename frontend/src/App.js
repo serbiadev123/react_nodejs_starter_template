@@ -6,6 +6,7 @@ import Footer from "./components/layout/Footer";
 import Routes from "./components/router/Routes"
 import AdminSideMenu from "./components/layout/admin/AdminSideMenu";
 import AdminNavbar from "./components/layout/admin/AdminNavbar";
+import ErrorPopup from "./components/layout/errorPopup";
 
 class App extends Component {
     /**
@@ -70,6 +71,7 @@ class App extends Component {
 
     render() {
         return <BrowserRouter forceRefresh={!this.supportsHistory}>
+                <ErrorPopup></ErrorPopup>
                 {this.state.isAdminPanel ? this.renderAdminPage() : this.renderClientPage()}
             </BrowserRouter>
     }

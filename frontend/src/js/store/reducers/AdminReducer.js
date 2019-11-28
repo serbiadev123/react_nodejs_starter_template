@@ -12,6 +12,26 @@ const adminReducer = (state = initState, action) => {
                 testData: action.data
             };
         }
+        case actionType.PROCESS_POPUP_WINDOW: {
+            console.log("ERROR WINDOW CLOSE", action)
+            return {
+                ...state,
+                error: false,
+                errorMessage: ''
+            };
+        }
+        //leave this at the end
+        case actionType.ERROR: {
+            console.log("ERROR", action)
+            // make sure to reset values of variables, other way the old values will still
+            // stay and it will look like there was no error
+            return {
+                ...state,
+                testData: '',
+                error: true,
+                errorMessage: action.error.message,
+            };
+        }
         default:
             return state;
     }

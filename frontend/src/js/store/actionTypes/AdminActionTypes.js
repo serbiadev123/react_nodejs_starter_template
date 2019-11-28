@@ -9,3 +9,8 @@ export const testAdminAction = data => ({
     type: actionType.TEST,
     data
 });
+
+export const processPopupWindow = data => ({
+    type: actionType.PROCESS_POPUP_WINDOW,
+    data
+});
