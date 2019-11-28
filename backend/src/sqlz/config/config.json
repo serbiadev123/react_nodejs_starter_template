@@ -1,11 +1,25 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": ":memory:"
+    "username": "root",
+    "password": "root",
+    "database": "distributed_systems",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql",
+    "logging": true,
+    "force": true,
+    "timezone": "+00:00"
   },
   "test": {
-    "dialect": "sqlite",
-    "storage": ":memory:"
+    "username": "root",
+    "password": "root",
+    "database": "distributed_systems",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql",
+    "logging": true,
+    "force": true,
+    "timezone": "+00:00"
   },
   "production": {
     "username": "postgres",
