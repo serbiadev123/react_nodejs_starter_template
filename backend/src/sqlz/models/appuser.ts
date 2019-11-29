@@ -1,6 +1,5 @@
 import { Model, STRING, UUID, Deferrable } from 'sequelize'
 import sequelize from './_index'
-import { Language } from './language'
 import { UserRole } from './userRole'
 
 export class AppUser extends Model {

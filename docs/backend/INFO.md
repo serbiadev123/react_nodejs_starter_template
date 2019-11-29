@@ -95,6 +95,146 @@ module.exports = {
 
 ```
 
+### Seeding
+In order to initialy seed the database, you will need to run the seed command: `./node_modules/.bin/sequelize db:seed:all` , --debug is optional to see the full console log print and possible errors. Make sure you seed after the migration, so the sequalize has the database to write to.
+
+Also in order to avoid forgeting names of some existing database elment you created in the previous seeding files, you can create objects (like enums), and reuse them in the future seed files. Also you can query the existing database to retrieve elements which you need to create connection to new database elements.
+
+Here are 2 examples. First one is basic role type seed:
+``` javascript
+'use strict';
+
+const uuidv4 = require('uuid/v4');
+
+const USER_ROLES = {
+    GUEST: 'GUEST',
+    USER: 'USER',
+    ADMIN: 'ADMIN'
+}
+
+module.exports = {
+    up: (queryInterface, Sequelize) => {
+        const keys = Object.keys(USER_ROLES);
+
+        const userRoles = keys.map((key)=>{
+            return {
+                id: uuidv4(),
+                name: key,
+                createdAt : new Date(),
+                updatedAt : new Date()
+            }
+        })
+
+        return queryInterface.bulkInsert('UserRoles', userRoles, {});
+    },
+
+    down: (queryInterface, Sequelize) => {
+        const keys = Object.keys(USER_ROLES);
+
+        const userRoles = keys.map((key)=>{
+            return {
+                name: key,
+            }
+        })
+        
+        return queryInterface.bulkDelete('UserRoles', userRoles)
+    },
+
+    USER_ROLES
+};
+
+```
+
+And the second one is using the roles defined here, extracting those elements from the database, and creating users:
+``` javascript
+'use strict';
+
+const USER_ROLES = require('./20191129043835-user_roles').USER_ROLES;
+const uuidv4 = require('uuid/v4');
+const bcrypt = require('bcrypt');
+
+const defineInitialUsers = async queryInterface => {
+    const users = []
+
+    const ADMIN = {
+        id: uuidv4(),
+        email: 'admin@admin.gmail',
+        username: 'admin',
+        firstName: 'fradmin',
+        lastName: 'lsadmin',
+        pwd: bcrypt.hashSync('admin', 10),
+        createdAt : new Date(),
+        updatedAt : new Date(),
+    }
+    
+    const USER = {
+        id: uuidv4(),
+        email: 'user@user.gmail',
+        username: 'user',
+        firstName: 'fruser',
+        lastName: 'lsuser',
+        pwd: bcrypt.hashSync('user', 10),
+        createdAt : new Date(),
+        updatedAt : new Date(),
+    }
+
+    let adminRoleId = null
+
+    try{
+        adminRoleId = await queryInterface.rawSelect('UserRoles', {
+            where: {
+                name: USER_ROLES.ADMIN,
+            },
+        }, ['id']);
+    } catch(e) {
+        console.log('Error getting admin role, skipping admin creation. ERROR:', e)
+    }
+
+    if (adminRoleId) {
+        ADMIN['userRoleId'] = adminRoleId
+        users.push(ADMIN)
+    }
+
+    let userRoleId = null
+    
+    try{
+        userRoleId = await queryInterface.rawSelect('UserRoles', {
+            where: {
+                name: USER_ROLES.USER,
+            },
+        }, ['id']);
+    } catch(e) {
+        console.log('Error getting user role, skipping user creation. ERROR:', e)
+    }
+
+    if (adminRoleId) {
+        USER['userRoleId'] = userRoleId
+        users.push(USER)
+    }
+
+    return users
+}
+
+
+module.exports = {
+    up: async (queryInterface, Sequelize) => {
+        const users = await defineInitialUsers(queryInterface)
+
+        return queryInterface.bulkInsert('AppUsers', users, {});
+    },
+
+    down: async (queryInterface, Sequelize) => {
+        let users = await defineInitialUsers(queryInterface)
+        users = users.map((user)=> {
+            return {username: user.username}
+        })
+        
+        return queryInterface.bulkDelete('AppUsers', users)
+    }
+};
+
+```
+
 ## Routing
 In order for our server to expose our code, we must create a Route which will be seen by outside clients.
 All of our routes are located at: `backend\src\routes\_index.ts`. In order to not keep all the routes in one file, they are seperated by functionality in subfiles. So in order to create a totaly new route, you will have to create a file in the same folder following existing examples:
@@ -228,4 +368,4 @@ For additional information you can check the sequalize documentation on how to e
 If you are not returning the found data in the database, make sure to return the ERROR on other messages as an ENUM located at: `backend\src\enums\databaseSearchResults.ts` . Add additional statuses if needed. This is needed so we can return appropriate errors from the controllers.
 
 ## Returning the data from the controller
-To stay consistent, when returning the success or error messages we must always use the `Boom` library. It has many different error codes, and it follows the best web standards. Yuo can check the Boom documentation on additional information.
+To stay consistent, when returning the success or error messages we must always use the `Boom` library. It has many different error codes, and it follows the best web standards. You can check the Boom documentation on additional information.

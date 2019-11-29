@@ -37,16 +37,6 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            languageId: {
-                type: Sequelize.UUID,
-                allowNull: false,
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'Languages',
-                    key: 'id',
-                    as: 'languageId',
-                }
-            },
             userRoleId: {
                 type: Sequelize.UUID,
                 allowNull: false,
@@ -57,7 +47,6 @@ module.exports = {
                     as: 'userRoleId',
                 }
             }
-            })
-    ,
+        }),
     down: (queryInterface, Sequelize) => queryInterface.dropTable('AppUsers')
 }
