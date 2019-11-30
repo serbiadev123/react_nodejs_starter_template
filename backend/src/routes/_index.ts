@@ -11,8 +11,6 @@ export function initRoutes(app: Express) {
         message: 'server is running!'
     }))
 
-    const routes = Router();
-
     LanguagesRoutes.routes(app)
     AppUserRoutes.routes(app)
     TestRoutes.routes(app)

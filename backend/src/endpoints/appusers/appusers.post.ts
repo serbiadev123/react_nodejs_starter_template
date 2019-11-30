@@ -12,10 +12,13 @@ export function login(req: Request, res: Response) {
     AppUserDao.login(req.body)
         .then(appuser => res.status(200).send(appuser))
         .catch(error => {
-            if (error === DATABASE_SEARCH_RESULT.NOT_FOUND) {
-                return res.boom.notFound()
-            } else {
-                return res.boom.badRequest(error)
+            switch (error) {
+                case DATABASE_SEARCH_RESULT.NOT_FOUND:
+                    return res.boom.notFound('Invalid username or password')
+                case DATABASE_SEARCH_RESULT.INVALID_PASSWORD:
+                    return res.boom.notFound('Invalid username or password')
+                default:
+                    return res.boom.badImplementation('Server Error. Try again later, or contact the site owners.')
             }
         })
 }

@@ -3,16 +3,13 @@ import sequelize from './_index'
 import { UserRole } from './userRole'
 
 export class AppUser extends Model {
-
-}
-
-export class AppUserModel {
     id: string
     email: string
     username: string
     firstName: string
     lastName: string
     pwd: string
+    UserRole: UserRole
     createdAt: Date
     updatedAt: Date
 }

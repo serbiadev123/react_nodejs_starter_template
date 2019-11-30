@@ -1,7 +1,6 @@
 import { check } from 'express-validator'
 
 export const CreateUserValidationRules = () => {
-    console.log("VALIDATION CREATION")
     return [
         check('pwd', 'Password is required').notEmpty(),
         check('email', 'Email is required').notEmpty(),

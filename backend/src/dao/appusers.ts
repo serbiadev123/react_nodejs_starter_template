@@ -1,14 +1,16 @@
 import * as uuid from 'uuid'
+import * as bcrypt from 'bcrypt'
 import { AppUser } from './../sqlz/models/appuser'
 import { UserRole } from '../sqlz/models/userRole'
 import { DATABASE_SEARCH_RESULT } from '../enums/databaseSearchResults'
 import { Op } from 'sequelize'
+
 const { or, and, gt, lt } = Op
 
 export function create(appUser: any): Promise<any> {
     // finalize create
 
-    return;
+    return
     //   return Language.findOne({
     //     where: { name: 'fr' }
     //   })
@@ -31,15 +33,15 @@ export function findAll(): Promise<any> {
 export function login(appUser: any): Promise<any> {
     return AppUser
         .findOne({
-            where: {
-                email: appUser.username,
-                pwd: appUser.pwd
-            },
             [or]: [
                 {
                     where: {
-                        username: appUser.username,
-                        pwd: appUser.pwd
+                        email: appUser.username
+                    }
+                },
+                {
+                    where: {
+                        username: appUser.username
                     }
                 }
             ],
@@ -50,5 +52,20 @@ export function login(appUser: any): Promise<any> {
                 throw DATABASE_SEARCH_RESULT.NOT_FOUND
             }
             return user
+        })
+        .then(user => {
+            return bcrypt.compare(appUser.pwd, user.pwd)
+                .then(res => {
+                    if (res) {
+                        return {
+                            email: user.email,
+                            username: user.username,
+                            firstName: user.username,
+                            lastName: user.username,
+                            userRole: user.UserRole.name
+                        }
+                    }
+                    throw DATABASE_SEARCH_RESULT.INVALID_PASSWORD
+                })
         })
 }

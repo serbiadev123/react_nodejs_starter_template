@@ -2,6 +2,8 @@ import * as actionType from "../../enums/ActionTypeConstants";
 
 const initState = {
     testData: 'test',
+    error: false,
+    errorMessage: ''
 };
 
 const adminReducer = (state = initState, action) => {
@@ -13,7 +15,6 @@ const adminReducer = (state = initState, action) => {
             };
         }
         case actionType.PROCESS_POPUP_WINDOW: {
-            console.log("ERROR WINDOW CLOSE", action)
             return {
                 ...state,
                 error: false,
