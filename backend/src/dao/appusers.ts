@@ -32,6 +32,7 @@ export function findAll(): Promise<any> {
 
 export function login(appUser: any): Promise<any> {
     return AppUser
+        // Find user based on the username or email
         .findOne({
             [or]: [
                 {
@@ -47,12 +48,14 @@ export function login(appUser: any): Promise<any> {
             ],
             include: [UserRole]
         })
+        // return error if the user does not exist in the database
         .then(user => {
             if (!user) {
                 throw DATABASE_SEARCH_RESULT.NOT_FOUND
             }
             return user
         })
+        // check if the passes password is valid and return the user, or error if the password is not valid
         .then(user => {
             return bcrypt.compare(appUser.pwd, user.pwd)
                 .then(res => {

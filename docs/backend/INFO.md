@@ -241,15 +241,16 @@ All of our routes are located at: `backend\src\routes\_index.ts`. In order to no
 ``` javascript
 import { Express } from 'express'
 import { AppUserController } from '../endpoints/_index'
-import auth from '../endpoints/middleware/auth'
+import { auth } from '../endpoints/middleware/auth'
 import validation from '../endpoints/middleware/validation'
 import { CreateUserValidationRules, LoginUserValidationRules } from '../endpoints/appusers/_index'
+import { USER_ROLES } from '../enums/userRoles'
 
 export function routes(app: Express) {
     app.get('/api/appUsers', auth, AppUserController.AppUserGet.list)
     app.post(
-        '/api/appUsers', 
-        auth,
+        '/api/appUsers',
+        auth([USER_ROLES.ADMIN]),
         CreateUserValidationRules(),
         validation,
         AppUserController.AppUserPost.create
@@ -258,7 +259,6 @@ export function routes(app: Express) {
     app.post(
         '/api/appUsers/login',
         LoginUserValidationRules(),
-        auth,
         validation,
         AppUserController.AppUserPost.login
     )
@@ -303,7 +303,6 @@ Validation file should be located in the controller folder. Example for users da
 import { check } from 'express-validator'
 
 export const CreateUserValidationRules = () => {
-    console.log("VALIDATION CREATION")
     return [
         check('pwd', 'Password is required').notEmpty(),
         check('email', 'Email is required').notEmpty(),
@@ -322,6 +321,18 @@ Additional validation rules can be checked in the `express-validator` documentat
 
 `validation` middleware will probably not need to change. It is not dependant on individual validation rules, so the code will not need to change, if the validation definitions change.
 
+## Route Authentication
+In order to protect the routes so only authenticated users can access them, all you need to do is pass the auth middleware with array of appropriate permissions from the `backend\src\enums\userRoles.ts` . 
+Example:
+``` javascript
+app.post(
+	'/api/appUsers',
+	auth([USER_ROLES.ADMIN]),
+	CreateUserValidationRules(),
+	validation,
+	AppUserController.AppUserPost.create
+)
+```
 ## Database access object (DAO)
 To manipulate the database objects, we will use the DAO folder: `backend\src\dao`. For each new controller folder (group) you add, you will need a DAO file to manipulate the approporiate databases connected to that controller. Add the new file in the same folder, and make sure you also include it in the `_index.ts` file for easier use in the project. 
 Here is an example:
