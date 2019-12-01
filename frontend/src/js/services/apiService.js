@@ -17,7 +17,7 @@ export function post(url, data, config, successType) {
             dispatch(errorType(response.errorMessage));
         } catch (error) {
             if (error.response) {
-                return dispatch(errorType(error.response.data.errorMessage));
+                return dispatch(errorType(error.response.data.message));
             } 
             dispatch(errorType(error));
         }

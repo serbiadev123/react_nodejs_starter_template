@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
+import { ADMIN_LINKS, LINKS } from '../../../js/Enums';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -26,6 +28,12 @@ const AdminNavigationStyle = styled.div`
 `;
 
 class AdminSideMenu extends Component {
+    avatarLinks = [
+        ADMIN_LINKS.USER_ACCOUNT,
+        ADMIN_LINKS.SETTINGS,
+        LINKS.LOGOUT
+    ];
+
     imgUrl = "";
     fullName = "Boris Krnjajic";
 
@@ -49,9 +57,15 @@ class AdminSideMenu extends Component {
                                     <div className="pl-3">
                                         <p>Welcome!</p>
                                     </div>
-                                    <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">Settings</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3" >Logout</Dropdown.Item>
+                                    {this.avatarLinks.map((link, index)=>{
+                                        return <Dropdown.Item
+                                                    as={RouterLink} 
+                                                    key={index}
+                                                    eventKey={index}
+                                                    to={link.relativeUrl}>
+                                                        {link.name}
+                                                </Dropdown.Item>
+                                    })}
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>

@@ -20,6 +20,7 @@ export const LINKS = {
     ANOTHER_ACTION: new Link("Another Action", "another-action"),
     SOMETHING: new Link("Something", "something"),
     SEPERATED_LINK: new Link("Separated Link", "separated-link"),
+    LOGOUT: new Link("Logout", "/logout")
 };
 
 
@@ -49,5 +50,8 @@ export const ADMIN_LINKS = {
         ADMIN_SUB_LINKS.PAGES_SECOND,
         ADMIN_SUB_LINKS.PAGES_THIRD,
     ], ICONS.COFFEE),
+    // admin avatar(profile icon) links
+    USER_ACCOUNT: new Link("My Account", "/admin/myaccount"),
+    SETTINGS: new Link("Settings", "/admin/settings")
 };
 

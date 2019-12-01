@@ -6,20 +6,17 @@ import ReactDOM from 'react-dom';
 
 // Redux components
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from "redux";
-import persistCombinedReducers from "./js/store/reducers/index";
-import thunk from "redux-thunk";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
 import {BrowserRouter as Router} from 'react-router-dom'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import store from './store';
 import './fontawesome';
 
 require('dotenv').config()
 
-const store = createStore(persistCombinedReducers, applyMiddleware(thunk));
 const persistor = persistStore(store);
 
 ReactDOM.render(

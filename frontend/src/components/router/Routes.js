@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import ClientErr404 from '../pages/ClientErr404';
+import Logout from '../pages/Logout';
 import AdminHome from '../pages/admin/AdminHome';
 import AdminErr404 from '../pages/admin/AdminErr404';
 
@@ -63,6 +64,7 @@ class Routes extends Component{
         new Route('/home', Home),
         new Route('/contact', Contact),
         new Route('/about', About),
+        new Route('/logout', Logout),
         new AdminRoute('/', AdminHome)
     ]
 

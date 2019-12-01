@@ -17,12 +17,14 @@ class ErrorPopup extends Component {
                 <Modal.Title>Error</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h2>{this.props.errorMessage}</h2>  
-                    <p>
-                        Sorry, there has been an error, please try again. 
-                        If you still have issues contact the support
-                    </p>
-                      
+                    {
+                        this.props.errorMessage ?
+                        <h2>{this.props.errorMessage}</h2> :
+                        <p>
+                            Sorry, there has been an error, please try again. 
+                            If you still have issues contact the support
+                        </p>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="primary" onClick={this.handleClose}>

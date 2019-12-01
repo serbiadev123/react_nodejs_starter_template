@@ -24,7 +24,8 @@
     "prettify": "./node_modules/.bin/tsfmt -r --baseDir ./src",
     "sqlz:migrate": "./node_modules/.bin/sequelize db:migrate",
     "sqlz:undo": "./node_modules/.bin/sequelize db:migrate:undo",
-    "sqlz:new": "./node_modules/.bin/sequelize migration:create"
+    "sqlz:new": "./node_modules/.bin/sequelize migration:create",
+    "sqlz:seed": "./node_modules/.bin/sequelize db:seed"
   },
   "lint-staged": {
     "src/**/*.ts": [
