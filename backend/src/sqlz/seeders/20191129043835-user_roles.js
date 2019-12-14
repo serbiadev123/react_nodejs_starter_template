@@ -7,7 +7,7 @@ const USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN'
 }
-
+console.log("GELOOOOOOOOÕddasdasdasdasdasdasdasdasdasd")
 module.exports = {
     up: (queryInterface, Sequelize) => {
         const keys = Object.keys(USER_ROLES);
