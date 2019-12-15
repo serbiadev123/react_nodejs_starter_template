@@ -1,15 +1,16 @@
 # DATABASE MANIPULATION WITH SEQUALIZE
 Backend is using NodeJS + Express + Sequalize.
 
-In order to work with the database, you will need to familiarize your self with Sequalie ORM. ANd do take in consideration that we implemented a typescript version, so not everything is the same.
+In order to work with the database, you will need to familiarize your self with Sequalie ORM. And do take in consideration that we implemented a typescript version, so not everything is the same.
+Make sure that you rename the `.env.example` file to `.env` and change the values with values from your computer.
 
 ## CREATING A NEW DATABASE
 
-If we want to create a new database, we need to create the model and the migration.
-After creation run the command: `sqlz:migrate` to migrate the existing data.
+If we want to create a new database, we need to create the model and the migration. Multiple databases are supported in a single project. So you will need to create additional models for each additional database.
+After creation of the migration files run the command: `sqlz:migrate1` or `sqlz:migrate2` to migrate the existing data. It will create the tables in the appropriate database based on the configuration of Sequalize and env variable of the `sqlz:migrate1` script. More information on the script you can find in package.json file.
 
 ### Model creation:
-By creating a model, we define the database attributes, and relationship to other databases. Sequalize supports oneToOne, oneToMany, ManyToMany using pivot tables and much more. Models are located in: `backend\src\sqlz\models`. Creating a new model consists of 4 parts. 
+By creating a model, we define the database attributes, and relationship to other databases. Sequalize supports oneToOne, oneToMany, ManyToMany using pivot tables and much more. Models are located in: `backend\src\sqlz\models\modelName`. If you are using multiple databases make sure to create multiple model classes. Creating a new model consists of 4 parts. 
 1. Defining a class
 2. Defining the classModel attributes
 3. Initializing the model
@@ -17,48 +18,51 @@ By creating a model, we define the database attributes, and relationship to othe
 
 Here is an example of creating onde model: 
 ``` javascript
-import { Model, STRING, UUID, Deferrable } from 'sequelize'
-import sequelize from './_index'
-import { UserRole } from './userRole'
+import { Model, STRING } from 'sequelize'
+import sequelizeDbs from '../_index'
+import { UserRoleDb1 } from '../userRole/userRoleDb1'
 
-export class AppUser extends Model {
-
+export class AppUserDb1 extends Model {
+    id: string
+    email: string
+    username: string
+    firstName: string
+    lastName: string
+    pwd: string
+    UserRole: UserRoleDb1
+    createdAt: Date
+    updatedAt: Date
 }
 
-export class AppUserModel {
-  id: string
-  email: string
-  username: string
-  firstName: string
-  lastName: string
-  pwd: string
-  createdAt: Date
-  updatedAt: Date
+if (!sequelizeDbs || sequelizeDbs.length < 1) {
+    throw new Error('Invalid sequalize settings, missing DB1 settings')
 }
 
-AppUser.init(
-  {
-    email: STRING(50),
-    username: STRING(50),
-    firstName: STRING(50),
-    lastName: STRING(50),
-    pwd: STRING(50)
-  },
-  { sequelize, modelName: 'AppUser' }
+AppUserDb1.init(
+    {
+        email: STRING(50),
+        username: STRING(50),
+        firstName: STRING(50),
+        lastName: STRING(50),
+        pwd: STRING(50)
+    },
+    { sequelize: sequelizeDbs[0], modelName: 'AppUser' }
 )
 
-AppUser.belongsTo(UserRole, {
+AppUserDb1.belongsTo(UserRoleDb1, {
     foreignKey: 'userRoleId'
-  })
+})
 ```
-    
-For additional references you can check the sequalie documentation. Just make sure you follow the way of creating the file, because in the examples they are not using typescript.
+
+As you can see we are connecting our model to a specific Sequalize instance in order to support multiple database connections. THe databases are read from the `backend\src\sqlz\config\config.ts`, and you can see the code which creates the array containing the databases connections at: `backend\src\sqlz\models\_index.ts` 
+For additional references you can check the sequalize documentation. Just make sure you follow the way of creating the file, because in the examples they are not using typescript.
 
 ### Creating the database itself (migration)
 In order to actualy create the database, we must create a migration file, which will be used to automatically create the new database with appropriate fields.
 
 To create a new migration, you can run the command `npm run sqlz:new NameOfTheFile`.
-This will create the new migration file at: `backend\src\sqlz\migrations` . Migrations are executed one by one, so make sure if you have 2 databases from which one has a foreign key in the other one, to first migrate the other one.
+This will create the new migration file at: `backend\src\sqlz\migrations` . Migrations are executed one by one, so make sure if you have 2 databases from which one has a foreign key in the other one, to first migrate the other one. The `sqlz:new` command will create a file for you, but the file data must follow the example of existing migrations in order to work.
+Make sure that the miliseconds in the name of the file are set in a proper order, because running the migrate command will execute the migration one file at the time. So if you have a foreign key in one migration, and the databases to which current one is conneted is in the next file, you will get an error. 
 
 For how exactly to add new attributes, you can check in the sequalize documentation, but how a file should look like, you can see in this example. Make sure to follow it, but change the fields and values you want to add:
 ``` javascript
@@ -96,9 +100,9 @@ module.exports = {
 ```
 
 ### Seeding
-In order to initialy seed the database, you will need to run the seed command: `./node_modules/.bin/sequelize db:seed:all` , --debug is optional to see the full console log print and possible errors. Make sure you seed after the migration, so the sequalize has the database to write to.
+In order to initialy seed the database, you will need to run the seed command: `npm run sqlz:seed1` or `npm run sqlz:seed2` , --debug is optional to see the full console log print and possible errors. Make sure you seed after the migration, so the sequalize has the database to write to.
 
-Also in order to avoid forgeting names of some existing database elment you created in the previous seeding files, you can create objects (like enums), and reuse them in the future seed files. Also you can query the existing database to retrieve elements which you need to create connection to new database elements.
+Also in order to avoid forgeting names of some existing database elements you created in the previous seeding files, you can create objects (like enums), and reuse them in the future seed files. Also you can query the existing database to retrieve elements which you need to create connection to new database elements.
 
 Here are 2 examples. First one is basic role type seed:
 ``` javascript

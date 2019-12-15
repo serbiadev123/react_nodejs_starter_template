@@ -4,3 +4,4 @@ coverage
 docs
 node_modules
 yarn.lock
+.env

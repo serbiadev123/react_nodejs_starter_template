@@ -1,4 +1,4 @@
-import { Model, STRING, UUID, Deferrable } from 'sequelize'
+import { Model, STRING } from 'sequelize'
 import sequelizeDbs from '../_index'
 import { UserRoleDb1 } from '../userRole/userRoleDb1'
 

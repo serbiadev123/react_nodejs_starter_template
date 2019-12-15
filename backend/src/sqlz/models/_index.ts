@@ -1,17 +1,15 @@
 import { Sequelize } from 'sequelize'
 
-const config = require('../config/config.json')
+import { mutiple_databases } from '../config/config'
 
 let databases: Array<Sequelize> = []
 
-const multipleDatabasesConfig = config['mutiple_databases']
-
-Object.keys(multipleDatabasesConfig).forEach(singleDbKey => {
+Object.keys(mutiple_databases).forEach(singleDbKey => {
     databases.push(new Sequelize(
-        multipleDatabasesConfig[singleDbKey]['database'],
-        multipleDatabasesConfig[singleDbKey]['username'],
-        multipleDatabasesConfig[singleDbKey]['password'],
-        multipleDatabasesConfig[singleDbKey]
+        mutiple_databases[singleDbKey]['database'],
+        mutiple_databases[singleDbKey]['username'],
+        mutiple_databases[singleDbKey]['password'],
+        mutiple_databases[singleDbKey]
     ))
 })
 
