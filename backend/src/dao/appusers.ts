@@ -1,7 +1,7 @@
 import * as uuid from 'uuid'
 import * as bcrypt from 'bcrypt'
-import { AppUser } from './../sqlz/models/appuser'
-import { UserRole } from '../sqlz/models/userRole'
+import { AppUserDb1 } from './../sqlz/models/appuser/appuserdb1'
+import { UserRoleDb1 } from '../sqlz/models/userRole/userRoleDb1'
 import { DATABASE_SEARCH_RESULT } from '../enums/databaseSearchResults'
 import { Op } from 'sequelize'
 
@@ -26,12 +26,12 @@ export function create(appUser: any): Promise<any> {
 }
 
 export function findAll(): Promise<any> {
-    return AppUser
+    return AppUserDb1
         .findAll({ include: [{ all: true }] })
 }
 
 export function login(appUser: any): Promise<any> {
-    return AppUser
+    return AppUserDb1
         // Find user based on the username or email
         .findOne({
             [or]: [
@@ -46,7 +46,7 @@ export function login(appUser: any): Promise<any> {
                     }
                 }
             ],
-            include: [UserRole]
+            include: [UserRoleDb1]
         })
         // return error if the user does not exist in the database
         .then(user => {

@@ -2,12 +2,17 @@ import { Sequelize } from 'sequelize'
 
 const config = require('../config/config.json')
 
-const dbConfig = config[process.env.NODE_ENV]
-const sequelize = new Sequelize(
-  dbConfig['database'],
-  dbConfig['username'],
-  dbConfig['password'],
-  dbConfig
-)
+let databases: Array<Sequelize> = []
 
-export default sequelize
+const multipleDatabasesConfig = config['mutiple_databases']
+
+Object.keys(multipleDatabasesConfig).forEach(singleDbKey => {
+    databases.push(new Sequelize(
+        multipleDatabasesConfig[singleDbKey]['database'],
+        multipleDatabasesConfig[singleDbKey]['username'],
+        multipleDatabasesConfig[singleDbKey]['password'],
+        multipleDatabasesConfig[singleDbKey]
+    ))
+})
+
+export default databases

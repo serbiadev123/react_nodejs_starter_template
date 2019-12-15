@@ -1,20 +1,24 @@
 import { Model, STRING, UUID, Deferrable } from 'sequelize'
-import sequelize from './_index'
-import { UserRole } from './userRole'
+import sequelizeDbs from '../_index'
+import { UserRoleDb1 } from '../userRole/userRoleDb1'
 
-export class AppUser extends Model {
+export class AppUserDb1 extends Model {
     id: string
     email: string
     username: string
     firstName: string
     lastName: string
     pwd: string
-    UserRole: UserRole
+    UserRole: UserRoleDb1
     createdAt: Date
     updatedAt: Date
 }
 
-AppUser.init(
+if (!sequelizeDbs || sequelizeDbs.length < 1) {
+    throw new Error('Invalid sequalize settings, missing DB1 settings')
+}
+
+AppUserDb1.init(
     {
         email: STRING(50),
         username: STRING(50),
@@ -22,10 +26,10 @@ AppUser.init(
         lastName: STRING(50),
         pwd: STRING(50)
     },
-    { sequelize, modelName: 'AppUser' }
+    { sequelize: sequelizeDbs[0], modelName: 'AppUser' }
 )
 
-AppUser.belongsTo(UserRole, {
+AppUserDb1.belongsTo(UserRoleDb1, {
     foreignKey: 'userRoleId'
 })
 

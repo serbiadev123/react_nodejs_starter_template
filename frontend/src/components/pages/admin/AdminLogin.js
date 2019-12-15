@@ -36,7 +36,6 @@ class InputComponent extends Component {
                     
                         this.props.processLoadingWindow(true)
 
-                        console.log("Sending data")
                         this.props.userLogin(values)
                             .then((data)=>{
                                 this.props.processLoadingWindow(false)

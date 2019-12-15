@@ -1,16 +1,4 @@
-{
-  "development": {
-    "username": "root",
-    "password": "tsinghua",
-    "database": "distributed_systems",
-    "host": "127.0.0.1",
-    "port": 3306,
-    "dialect": "mysql",
-    "logging": true,
-    "force": true,
-    "timezone": "+00:00"
-  },
-  "test": {
+const dbs1 = {
     "username": "root",
     "password": "root",
     "database": "distributed_systems",
@@ -20,16 +8,25 @@
     "logging": true,
     "force": true,
     "timezone": "+00:00"
-  },
-  "production": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "app",
+}
+
+const dbs2 = {
+    "username": "root",
+    "password": "root",
+    "database": "distributed_systems2",
     "host": "127.0.0.1",
-    "port": 5432,
-    "dialect": "postgres",
+    "port": 3306,
+    "dialect": "mysql",
     "logging": true,
     "force": true,
     "timezone": "+00:00"
-  }
 }
+
+module.exports = {
+    "mutiple_databases": {
+        dbs1,
+        dbs2
+    },
+    dbs1,
+    dbs2
+};
