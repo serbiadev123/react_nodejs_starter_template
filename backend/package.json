@@ -62,7 +62,6 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
-    "extendify": "1.0.0",
     "glob": "7.1.4",
     "gulp": "4.0.2",
     "gulp-istanbul": "1.1.3",
