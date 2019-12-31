@@ -11,8 +11,15 @@ export function create(req: Request, res: Response) {
 export function login(req: Request, res: Response) {
     AppUserDao.login(req.body)
         .then(appuser => {
-            appuser.token = signToken(appuser)
-            res.status(200).send(appuser)
+            let token = signToken(appuser)
+
+            res.status(200).send({
+                email: appuser.email,
+                username: appuser.username,
+                name: appuser.username,
+                userRole: appuser.UserRole.name,
+                token
+            })
         })
         .catch(error => {
             switch (error) {

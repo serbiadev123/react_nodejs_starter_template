@@ -22,13 +22,11 @@
     "run:test": "env-cmd cross-env NODE_ENV=test gulp test",
     "tslint": "env-cmd gulp tslint",
     "prettify": "env-cmd ./node_modules/.bin/tsfmt -r --baseDir ./src",
-    "sqlz:migrate1": "env-cmd ./node_modules/.bin/sequelize --env dbs1 db:migrate",
-    "sqlz:migrate2": "env-cmd ./node_modules/.bin/sequelize --env dbs2 db:migrate",
-    "sqlz:undo1": "env-cmd ./node_modules/.bin/sequelize --env dbs1 db:migrate:undo",
-    "sqlz:undo2": "env-cmd ./node_modules/.bin/sequelize --env dbs2 db:migrate:undo",
+    "sqlz:migrate": "env-cmd ./node_modules/.bin/sequelize --env mySqlDatabase db:migrate",
+    "sqlz:undo": "env-cmd ./node_modules/.bin/sequelize --env mySqlDatabase db:migrate:undo",
     "sqlz:new": "env-cmd ./node_modules/.bin/sequelize migration:create",
-    "sqlz:seed1": "env-cmd ./node_modules/.bin/sequelize --env dbs1 db:seed:all",
-    "sqlz:seed2": "env-cmd ./node_modules/.bin/sequelize --env dbs2 db:seed:all"
+    "sqlz:seed": "env-cmd ./node_modules/.bin/sequelize --env mySqlDatabase db:seed:all",
+    "sqlz:seed:undo": "env-cmd ./node_modules/.bin/sequelize --env mySqlDatabase  db:seed:undo:all"
   },
   "lint-staged": {
     "src/**/*.ts": [
@@ -37,8 +35,10 @@
     ]
   },
   "dependencies": {
-    "@types/node": "^12.12.14",
+    "@types/bluebird": "^3.5.29",
+    "@types/node": "^12.12.22",
     "@types/sequelize": "^4.28.8",
+    "@types/validator": "^12.0.1",
     "bcrypt": "^3.0.7",
     "body-parser": "1.19.0",
     "config": "^3.2.4",
@@ -49,10 +49,11 @@
     "express": "4.17.1",
     "express-boom": "3.0.0",
     "express-validator": "^6.3.0",
+    "faker": "github:Marak/faker.js",
     "jsonwebtoken": "^8.5.1",
     "morgan": "1.9.1",
     "mysql": "^2.17.1",
-    "mysql2": "^2.0.0",
+    "mysql2": "^2.1.0",
     "pg": "7.12.1",
     "pg-hstore": "2.3.3",
     "sequelize": "5.19.1",

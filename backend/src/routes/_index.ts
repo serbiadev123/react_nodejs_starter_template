@@ -1,6 +1,5 @@
 import * as winston from 'winston'
 import { Router, Express, Request, Response } from 'express'
-import * as LanguagesRoutes from './languages'
 import * as AppUserRoutes from './appusers'
 import * as TestRoutes from './test'
 
@@ -11,7 +10,6 @@ export function initRoutes(app: Express) {
         message: 'server is running!'
     }))
 
-    LanguagesRoutes.routes(app)
     AppUserRoutes.routes(app)
     TestRoutes.routes(app)
 

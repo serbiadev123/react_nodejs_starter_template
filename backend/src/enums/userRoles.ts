@@ -2,5 +2,5 @@ export enum USER_ROLES {
     GUEST = 'GUEST',
     USER = 'USER',
     ADMIN = 'ADMIN'
-    // ... add more roles when needed. Make sure to reseed the database with the new roles
+    // ... add more roles if added to the database. These are values that should not be changed to often
 }
