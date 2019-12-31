@@ -21,7 +21,7 @@ export const auth = (userRoles: Array<USER_ROLES>) => {
             const decoded = jwt.verify(token, config.get(PRIVATE_KEY_NAME))
             req.user = decoded.appuser
 
-            if (!userRoles.includes(req.user.userRole)) {
+            if (!userRoles.includes(req.user.UserRole.name)) {
                 return res.boom.forbidden('Permission not high enough')
             }
 
