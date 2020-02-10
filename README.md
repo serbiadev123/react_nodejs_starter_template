@@ -26,7 +26,7 @@ Go to the backend folder.
 
 - make sure you have a config json file named exactly as this one: `backend\config\default.json` with following variables:
   - myprivatekey - can be any string. It is used for token hashing. Make sure to give it some unique name
-- install the npm packages : **npm install**
+- install the npm packages : **npm install** (sometimes the npm install get stuck, if it happens make sure to run it as admin, and wait couple of minutes)
 - update the npm packages if needed: **npm update**
 - run the back end server: **npm start**
 
