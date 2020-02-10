@@ -9,24 +9,20 @@ let typedoc = require("gulp-typedoc");
 let mocha = require("gulp-mocha");
 let istanbul = require("gulp-istanbul");
 let plumber = require("gulp-plumber");
-let remapIstanbul = require("remap-istanbul/lib/gulpRemapIstanbul");
 
 const CLEAN_BUILD = "clean:build";
-const CLEAN_COVERAGE = "clean:coverage";
 const CLEAN_DOC = "clean:doc";
 const TSLINT = "tslint";
 const COMPILE_TYPESCRIPT = "compile:typescript";
 const COPY_STATIC_FILES = "copy:static";
 const BUILD = "build";
 const GENERATE_DOC = "generate:doc";
-const PRETEST = "pretest";
 const RUN_TESTS = "run:tests";
 const TEST = "test";
-const REMAP_COVERAGE = "remap:coverage";
 
 const TS_SRC_GLOB = "./src/**/*.ts";
 const TS_TEST_GLOB = "./test/**/*.ts";
-const JS_TEST_GLOB = "./build/**/*.js";
+const JS_TEST_GLOB = "./build/test/**/*.js";
 const JS_SRC_GLOB = "./build/**/*.js";
 const TS_GLOB = [TS_SRC_GLOB];
 const STATIC_FILES = ['./src/**/*.json']
@@ -36,11 +32,6 @@ const tsProject = typescript.createProject("tsconfig.json");
 // Removes the ./build directory with all its content.
 gulp.task(CLEAN_BUILD, function (callback) {
   rimraf("./build", callback);
-});
-
-// Removes the ./coverage directory with all its content.
-gulp.task(CLEAN_COVERAGE, function (callback) {
-  rimraf("./coverage", callback);
 });
 
 // Removes the ./docs directory with all its content.
@@ -89,14 +80,6 @@ gulp.task(GENERATE_DOC, gulp.series(CLEAN_DOC, function () {
     }))
 }));
 
-// Sets up the istanbul coverage
-gulp.task(PRETEST, function () {
-  gulp.src(JS_SRC_GLOB)
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(istanbul({ includeUntested: true }))
-    .pipe(istanbul.hookRequire())
-});
-
 // Run the tests via mocha and generate a istanbul json report.
 gulp.task(RUN_TESTS, function (callback) {
   let mochaError;
@@ -114,27 +97,8 @@ gulp.task(RUN_TESTS, function (callback) {
     });
 });
 
-// Remap Coverage to *.ts-files and generate html, text and json summary
-gulp.task(REMAP_COVERAGE, function () {
-  return gulp.src("./coverage/coverage-final.json")
-    .pipe(remapIstanbul({
-      // basePath: ".",
-      fail: true,
-      reports: {
-        "html": "./coverage",
-        "json": "./coverage",
-        "text-summary": null,
-        "lcovonly": "./coverage/lcov.info"
-      }
-    }))
-    .pipe(gulp.dest("coverage"))
-    .on("end", function () {
-      console.log("--> For a more detailed report, check the ./coverage directory <--")
-    });
-});
-
-// Runs all required steps for testing in sequence.
-gulp.task(TEST, gulp.series(BUILD, CLEAN_COVERAGE, PRETEST, RUN_TESTS, REMAP_COVERAGE));
+// Runs all required steps for testing in sequence. You can add additional steps when needed.
+gulp.task(TEST, gulp.series(BUILD, RUN_TESTS));
 
 // Runs the build task and starts the server every time changes are detected.
 gulp.task("watch", gulp.series(BUILD, function () {

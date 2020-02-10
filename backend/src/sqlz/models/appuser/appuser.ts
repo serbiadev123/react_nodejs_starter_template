@@ -28,7 +28,7 @@ export class AppUser extends ModelmySql {
     public lastName: string
     public pwd: string
     public userRoleName: string
-    public readonly createdAt!: Date;
+    public readonly createdAt!: Date
     public readonly updatedAt!: Date
 
     // example of nullable field
