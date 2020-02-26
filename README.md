@@ -29,8 +29,9 @@ Go to the backend folder.
 - install the npm packages : **npm install** (sometimes the npm install get stuck, if it happens make sure to run it as admin, and wait couple of minutes)
 - update the npm packages if needed: **npm update**
 - run the back end server: **npm start**
+- copy the .env.example and rename it as .env. Use those variables to set up the local enviroment.
 
-Sometimes after updating the typescript files, the javascript files don't get updated. IIf this is your case just stop the npm start command and start it again. This will rebuild the javascript.
+Sometimes after updating the typescript files, the javascript files don't get updated. If this is your case just stop the npm start command and start it again. This will rebuild the javascript.
 
 ### Setting up the database connection:
 We are using sequalize, and it has a configuration file located at: `backend\src\sqlz\config\config.json`. We are using development settings for our testing purposes (not sure how to actualy select a different setting), so add your database information to that object. For each param explanation you can check the sequalize documentation.
